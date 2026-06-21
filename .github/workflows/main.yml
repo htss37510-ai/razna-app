@@ -6,19 +6,18 @@ jobs:
     runs-on: macos-latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
 
     - name: Install Dependencies
-      run: npm install
-
-    - name: Install Capacitor iOS
-      run: npm install @capacitor/ios@8.2.0
+      run: |
+        npm install
+        npm install @capacitor/cli @capacitor/core @capacitor/ios
 
     - name: Build Web Project (Vite)
       run: npm run build
@@ -27,11 +26,6 @@ jobs:
       run: |
         npx cap add ios || true
         npx cap sync ios
-
-    - name: Update CocoaPods (Workspace Fix)
-      run: |
-        cd ios/App
-        pod install --repo-update
 
     - name: Build Unsigned IPA
       run: |
