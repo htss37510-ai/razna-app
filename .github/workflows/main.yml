@@ -31,9 +31,13 @@ jobs:
     - name: Build Unsigned IPA
       run: |
         cd ios/App
-        xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive
+        xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
+        
+        # إنشاء مجلد الـ Payload وضمان نسخ ملف الـ App المدمج
         mkdir -p payload/Payload
-        cp -r build/App.xcarchive/Products/Applications/App.app payload/Payload/
+        cp -r build/Build/Products/Release-iphoneos/App.app payload/Payload/
+        
+        # ضغط المجلد في المسار الرئيسي للمشروع كـ IPA
         cd payload
         zip -r ../../../App.ipa Payload
         
