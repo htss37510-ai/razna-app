@@ -22,9 +22,10 @@ jobs:
     - name: Build Web Project (Vite)
       run: npm run build
 
-    - name: Create or Update Capacitor iOS Folder
+    - name: Recreate iOS Project From Scratch
       run: |
-        npx cap add ios || true
+        rm -rf ios
+        npx cap add ios
         npx cap sync ios
 
     - name: Build Unsigned IPA
