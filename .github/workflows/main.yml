@@ -22,11 +22,12 @@ jobs:
     - name: Build Web Project (Vite)
       run: npm run build
 
-    - name: Recreate iOS Project From Scratch
+    - name: Hard Reset and Force iOS Build
       run: |
         rm -rf ios
         npx cap add ios
         npx cap sync ios
+        cd ios/App && pod install
 
     - name: Build Unsigned IPA
       run: |
