@@ -27,12 +27,11 @@ jobs:
         rm -rf ios
         npx cap add ios
         npx cap sync ios
-        cd ios/App && pod install
 
     - name: Build Unsigned IPA
       run: |
         cd ios/App
-        xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
+        xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
         mkdir -p payload/Payload
         cp -r build/Release-iphoneos/App.app payload/Payload/
         cd payload
