@@ -43,7 +43,7 @@ jobs:
         zip -r ../App.ipa Payload
         
     - name: Upload IPA Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: my-app-release
         path: App.ipa
