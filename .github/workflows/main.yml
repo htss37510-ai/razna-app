@@ -31,11 +31,13 @@ jobs:
     - name: Build Unsigned IPA
       run: |
         cd ios/App
-        xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
+        xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO clean build
         mkdir -p payload/Payload
-        cp -r build/Release-iphoneos/App.app payload/Payload/
+        cp -r build/Build/Products/Release-iphoneos/App.app payload/Payload/ 2>/dev/null || true
+        cp -r build/Build/Products/Release-iphoneos/App.xcarchive/Products/Applications/App.app payload/Payload/ 2>/dev/null || true
+        cp -r ~/Library/Developer/Xcode/DerivedData/*/Build/Products/Release-iphoneos/App.app payload/Payload/ 2>/dev/null || true
         cd payload
-        zip -r ../App.ipa Payload
+        zip -r ../../App.ipa Payload
         
     - name: Upload IPA Artifact
       uses: actions/upload-artifact@v4
