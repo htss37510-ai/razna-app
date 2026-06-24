@@ -27,6 +27,7 @@ jobs:
         rm -rf ios
         npx cap add ios
         npx cap sync ios
+        npx capacitor-assets generate --ios --assetPath resources
 
     - name: Build Unsigned IPA
       run: |
